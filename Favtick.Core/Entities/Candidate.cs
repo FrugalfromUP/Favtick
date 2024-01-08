@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Favtick.Core.Entities
 {
-    public class Condidate
+    public class Candidate
     {
         public int Id { get; set; }
         public string Name { get; set; }

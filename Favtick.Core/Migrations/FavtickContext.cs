@@ -11,31 +11,20 @@ namespace Favtick.Core.Migrations
 {
     public class FavtickContext : DbContext
     {
-        //private readonly IConfiguration _configuration;
-        //private readonly string _connectionString;
-
-        //public FavtickContext(IConfiguration configuration)
-        //{
-        //    _configuration = configuration;
-        //    _connectionString = _configuration.GetConnectionString("default");
-
-        //}
-
-        //DbSet<Condidate> condidates { get; set; }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseMySql(ServerVersion.AutoDetect("_connectionString"));
-        //}
-
+        
         public FavtickContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<Condidate> Condidates { get; set; }
+        public DbSet<Candidate> Candidates { get; set; }
+        public DbSet<Skill> Skills { get; set; }
 
-         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseMySql(ServerVersion.AutoDetect("_connectionString"));
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Skill>()
+             .HasOne<Candidate>()
+             .WithMany()
+             .HasForeignKey("CandidateId")
+             .OnDelete(DeleteBehavior.Cascade);
+        }
 
     }
 }

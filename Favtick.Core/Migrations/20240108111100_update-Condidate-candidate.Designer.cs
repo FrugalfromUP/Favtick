@@ -3,6 +3,7 @@ using System;
 using Favtick.Core.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Favtick.Core.Migrations
 {
     [DbContext(typeof(FavtickContext))]
-    partial class FavtickContextModelSnapshot : ModelSnapshot
+    [Migration("20240108111100_update-Condidate-candidate")]
+    partial class updateCondidatecandidate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +65,6 @@ namespace Favtick.Core.Migrations
                     b.Property<int?>("CandidateId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CandidateId1")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -73,21 +73,14 @@ namespace Favtick.Core.Migrations
 
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex("CandidateId1");
-
-                    b.ToTable("Skills");
+                    b.ToTable("Skill");
                 });
 
             modelBuilder.Entity("Favtick.Core.Entities.Skill", b =>
                 {
                     b.HasOne("Favtick.Core.Entities.Candidate", null)
-                        .WithMany()
-                        .HasForeignKey("CandidateId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Favtick.Core.Entities.Candidate", null)
                         .WithMany("Skills")
-                        .HasForeignKey("CandidateId1");
+                        .HasForeignKey("CandidateId");
                 });
 
             modelBuilder.Entity("Favtick.Core.Entities.Candidate", b =>
