@@ -1,6 +1,7 @@
 ﻿using Favtick.Core.Entities;
 using Favtick.Core.Migrations;
 using Favtick.Core.Repositories.Candidates;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Favtick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CandidateController : ControllerBase
     {
         private readonly ICandidateRepository _candidateRepository; 

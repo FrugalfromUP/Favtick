@@ -1,4 +1,5 @@
 ﻿using Favtick.Core.Entities;
+using Favtick.Core.Entities.Login;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,6 +17,7 @@ namespace Favtick.Core.Migrations
 
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<Skill> Skills { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +26,10 @@ namespace Favtick.Core.Migrations
              .WithMany()
              .HasForeignKey("CandidateId")
              .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.UserName)
+                .IsUnique();
         }
 
     }

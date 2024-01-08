@@ -25,11 +25,7 @@ namespace Favtick.Core.Repositories.Candidates
                 .ConfigureAwait(false);
             return data;
         }
-        //public async Task<List<Candidate>> GetAll()
-        //{ 
-        //    var data = await _favtickContext.Candidates.ToListAsync().ConfigureAwait(false);
-        //    return data;
-        //}
+
         public async Task<IEnumerable<Candidate>> GetAll()
         {
             var data = await _favtickContext.Candidates.Include(x=>x.Skills).ToListAsync().ConfigureAwait(false);
