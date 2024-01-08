@@ -23,6 +23,12 @@ namespace Favtick.Core.Repositories.Users
             return data;
         }
 
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            var data = await _favtickContext.Users.ToListAsync().ConfigureAwait(false);
+            return data;
+        }
+
         public async Task<User> GetUserByUserName(string userName)
         {
             var user = await _favtickContext.Users.FirstOrDefaultAsync(user => user.UserName == userName).ConfigureAwait(false);
@@ -32,6 +38,13 @@ namespace Favtick.Core.Repositories.Users
         {
             await _favtickContext.AddAsync(user).ConfigureAwait(false);
             await _favtickContext.SaveChangesAsync();
+            return user;
+        }
+
+        public User Update(User user)
+        {
+            _favtickContext.Users.Update(user);
+            //await _favtickContext.SaveChangesAsync().ConfigureAwait(false);
             return user;
         }
 

@@ -30,11 +30,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
+//Add controllers
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-}); ;
+});
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<ICandidateRepository,CandidateRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
@@ -44,7 +46,10 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
+
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+    option.CustomSchemaIds(type => type.FullName);
+
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,

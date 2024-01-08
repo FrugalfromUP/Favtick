@@ -1,4 +1,5 @@
-﻿using Favtick.Core.Entities.Login;
+﻿using Favtick.Core.Entities;
+using Favtick.Core.Entities.Login;
 using Favtick.Core.Repositories.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Favtick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UserController : ControllerBase
     {
         public readonly IUserRepository _userRepository;
@@ -34,18 +35,26 @@ namespace Favtick.Controllers
         }
 
 
-        //// GET: api/<UserController>
-        //[HttpGet]
-        //public IEnumerable<string> GetUser()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        // GET: api/<UserController>
+        [HttpGet]
+        public async Task<IActionResult> GetAllUser()
+        {
+            return Ok(await _userRepository.GetAll());
+        }
 
-        //// PUT api/<UserController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // PUT api/<UserController>/5
+        [HttpPut]
+        public async Task<IActionResult> Put(User user)
+        {
+            var data = await _userRepository.Get(user.Id).ConfigureAwait(false);
+
+            if (data != null)
+            {
+                return Ok(_userRepository.Update(user));
+            }
+
+            return NotFound();
+        }
 
         //// DELETE api/<UserController>/5
         //[HttpDelete("{id}")]

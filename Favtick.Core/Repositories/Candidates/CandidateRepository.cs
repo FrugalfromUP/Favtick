@@ -54,7 +54,7 @@ namespace Favtick.Core.Repositories.Candidates
 
         public Candidate Update(Candidate candidate)
         {
-            _favtickContext.Update(candidate);
+            _favtickContext.Candidates.Update(candidate);
             //await _favtickContext.SaveChangesAsync().ConfigureAwait(false);
             return candidate;
         }

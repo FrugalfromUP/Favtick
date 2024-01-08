@@ -6,6 +6,8 @@ namespace Favtick.Core.Repositories.Users
     {
         Task<User> Create(User user);
         Task<User> Get(int id);
+        Task<IEnumerable<User>> GetAll();
         Task<User> GetUserByUserName(string userName);
+        User Update(User user);
     }
 }
